@@ -159,13 +159,21 @@ for i_sec = 1:N_sec % current number of nerve model
         P(3)  = 0;
         theta = insertion_params(4);
         %%-----------------------------------------------------------------
-        model = interface_nervelec(model, theta, asnum, P, elec_params);
+        if N_fasc > 0
+            model = interface_nervelec(model, theta, asnum, P, elec_params);
+        else
+            model = interface_nervelec_generic(model, theta, asnum, P, elec_params);
+        end
         model.geom('geom1').run;
         %%-----------------------------------------------------------------
         % Material
         %%-----------------------------------------------------------------
         model = generate_materials(model);
-        model = assign_materials(model);
+        if N_fasc > 0
+            model = assign_materials(model);
+        else
+            model = assign_materials_generic(model);
+        end
         %%-----------------------------------------------------------------
         % Geometry
         %%-----------------------------------------------------------------
@@ -224,7 +232,11 @@ for i_sec = 1:N_sec % current number of nerve model
         %%-----------------------------------------------------------------
         model = generate_outernerve(model, 'CUFF', opt, ell, R, sal_pars, 0);
         %%-----------------------------------------------------------------
-        model = generate_circfasc(model, circular_fascicles, ell);
+        if N_fasc > 0
+            model = generate_circfasc(model, circular_fascicles, ell);
+        else
+            model.geom('geom1').feature('epifull').set('selresult', true);
+        end
         %%-----------------------------------------------------------------
         model = generate_electrode(model, 'CUFF', elec_params);
         %%-----------------------------------------------------------------
@@ -258,7 +270,12 @@ for i_sec = 1:N_sec % current number of nerve model
         % Material
         %%-----------------------------------------------------------------
         model = generate_materials(model);
-        model = assign_materials(model);
+        model = generate_materials(model);
+        if N_fasc > 0
+            model = assign_materials(model);
+        else
+            model = assign_materials_generic(model);
+        end
         %%-----------------------------------------------------------------
         % Interface nerve and electrode models
         %%-----------------------------------------------------------------
@@ -270,7 +287,11 @@ for i_sec = 1:N_sec % current number of nerve model
         %%-----------------------------------------------------------------
         nerve = geom1.feature.create('nerve','Difference');
         %%-----------------------------------------------------------------
-        nerve.selection('input').set({'salgeom','epigeom','perigeom','endogeom'});
+        if N_fasc > 0
+            nerve.selection('input').set({'salgeom','epigeom','perigeom','endogeom'});
+        else
+            nerve.selection('input').set({'salgeom','epifull'});
+        end
         %%-----------------------------------------------------------------
         nerve.selection('input2').set({'eleccopy','ascopy'});
         %%-----------------------------------------------------------------
