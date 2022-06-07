@@ -17,7 +17,7 @@ function model = interface_nervelec_generic(model, theta, asnum, P, elec_params)
 %%-------------------------------------------------------------------------
 % Authors: 
 %%-------------------------------------------------------------------------
-% Simone Romeni @TNE, EPFL
+% Andrea Pitzus @TNE, SSSA // @MeDSP, UniCa & Simone Romeni @TNE, EPFL
 %%-------------------------------------------------------------------------
 
 geom1 = model.geom('geom1');
