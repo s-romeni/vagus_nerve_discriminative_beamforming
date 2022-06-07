@@ -35,12 +35,12 @@ for i_sec = 1:N_sec % current number of nerve model
     h_as    = elec_params(8);
     l_cc    = l_shaft/N_asxs;
     %%---------------------------------------------------------------------
-    % Set nerve section parameters
+    % Set nerve section parameters (for the generic model set N_fasc = 0)
     %%---------------------------------------------------------------------
     % nerve_pars ['Number of fascicles [1]', 'Fascicle minimum radius [mm]', ...
     %     'Fascicle maximum radius [mm]', 'Nerve external radius [mm]', ...
     %     'delta [mm]', 'epsilon [mm]', 'Nerve extrusion length [mm]'};
-    nerve_pars = [6, 0.08, 0.35, nerve_diam/2, 0.05, 0.01, 20];
+    nerve_pars = [round(2*rand(1)+6), 0.08, 0.35, nerve_diam/2, 0.05, 0.01, 20];
     nerve_pars(2:end) = nerve_pars(2:end)*1e-3; % mm2m conversion
     N_fasc  = nerve_pars(1);
     rmin    = nerve_pars(2);
@@ -52,15 +52,17 @@ for i_sec = 1:N_sec % current number of nerve model
     % Set saline parameters
     sal_pars = [4*1e-3, 6*1e-3]; % [Radius [mm], + Delta Lenght [mm]]    
     %%---------------------------------------------------------------------
-    [centers,radii] = aci_packing(R, rmax, rmin, delta, epsilon, N_fasc); % A-priori Check for Intersections (no overlapped fascicles)
-    circular_fascicles = [centers, radii];
-    %%---------------------------------------------------------------------
-    % Modelling nerve reorganization
-    %%---------------------------------------------------------------------
-    % Move fascicles above the electrode
-    circular_fascicles_TIME = reshape_nerve(circular_fascicles,(-h_shaft/2-h_as+h_shaft)+epsilon,R,epsilon);
-    % Move fascicles below the electrode
-    circular_fascicles_TIME = reshape_nerve(circular_fascicles_TIME,-h_shaft/2-h_as-epsilon,R,epsilon);
+    if N_fasc > 0
+        [centers,radii] = aci_packing(R, rmax, rmin, delta, epsilon, N_fasc); % A-priori Check for Intersections (no overlapped fascicles)
+        circular_fascicles = [centers, radii];
+        %%-----------------------------------------------------------------
+        % Modelling nerve reorganization
+        %%-----------------------------------------------------------------
+        % Move fascicles above the electrode
+        circular_fascicles_TIME = reshape_nerve(circular_fascicles,(-h_shaft/2-h_as+h_shaft)+epsilon,R,epsilon);
+        % Move fascicles below the electrode
+        circular_fascicles_TIME = reshape_nerve(circular_fascicles_TIME,-h_shaft/2-h_as-epsilon,R,epsilon);
+    end
     %%---------------------------------------------------------------------
     % Active site position
     %%---------------------------------------------------------------------
@@ -74,16 +76,19 @@ for i_sec = 1:N_sec % current number of nerve model
         end
     end
     %%---------------------------------------------------------------------
-    % Draw the nerve section to check the topography and the reorganization
-    %%---------------------------------------------------------------------
-    draw_section(R,circular_fascicles_TIME,circular_fascicles,l_shaft,pos,d_as,h_as);
-    %%---------------------------------------------------------------------
-    if not(isfile(['nerve_mod_vagus_human_' num2str(i_sec) '.mat']))
+    if N_fasc > 0
         %%-----------------------------------------------------------------
-        save(['nerve_mod_vagus_human_' num2str(i_sec) '.mat'], 'R', 'ell','circular_fascicles','circular_fascicles_TIME');
-    else
+        % Draw the nerve section to check the topography and the reorganization
         %%-----------------------------------------------------------------
-        load(['nerve_mod_vagus_human_' num2str(i_sec) '.mat'], 'R', 'ell','circular_fascicles','circular_fascicles_TIME');
+        draw_section(R,circular_fascicles_TIME,circular_fascicles,l_shaft,pos,d_as,h_as);
+        %%-----------------------------------------------------------------
+        if not(isfile(['nerve_mod_vagus_human_' num2str(i_sec) '.mat']))
+            %%-------------------------------------------------------------
+            save(['nerve_mod_vagus_human_' num2str(i_sec) '.mat'], 'R', 'ell','circular_fascicles','circular_fascicles_TIME');
+        else
+            %%-------------------------------------------------------------
+            load(['nerve_mod_vagus_human_' num2str(i_sec) '.mat'], 'R', 'ell','circular_fascicles','circular_fascicles_TIME');
+        end
     end
     %%---------------------------------------------------------------------
     % Create model and assign conditions
@@ -103,7 +108,11 @@ for i_sec = 1:N_sec % current number of nerve model
         %%-----------------------------------------------------------------
         model = generate_outernerve(model, 'TIME', [0, 0, 0], ell, R, sal_pars, 0);
         %%-----------------------------------------------------------------
-        model = generate_circfasc(model, circular_fascicles_TIME, ell);
+        if N_fasc > 0
+            model = generate_circfasc(model, circular_fascicles_TIME, ell);
+        else
+            model.geom('geom1').feature('epifull').set('selresult', true);
+        end
         %%-----------------------------------------------------------------
         model = generate_electrode(model, 'TIME', elec_params);
         %%-----------------------------------------------------------------
