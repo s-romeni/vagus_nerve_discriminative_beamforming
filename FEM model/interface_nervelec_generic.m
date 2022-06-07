@@ -1,4 +1,4 @@
-function model = interface_nervelec_apriori(model, theta, asnum, P, elec_params)
+function model = interface_nervelec_generic(model, theta, asnum, P, elec_params)
 %%-------------------------------------------------------------------------
 % Function description: 
 %%-------------------------------------------------------------------------
