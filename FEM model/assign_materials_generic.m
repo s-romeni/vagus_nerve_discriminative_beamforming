@@ -1,4 +1,4 @@
-function model = assign_materials_apriori(model)
+function model = assign_materials_generic(model)
 %%-------------------------------------------------------------------------
 % Function description: 
 %%-------------------------------------------------------------------------
