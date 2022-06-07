@@ -50,7 +50,7 @@ for i_sec = 1:N_sec % current number of nerve model
     epsilon = nerve_pars(6);
     %%---------------------------------------------------------------------
     % Set saline parameters
-    sal_pars = [2*1e-3, 10*1e-3]; % [Radius [mm], Extrusion Lenght [mm]]    
+    sal_pars = [4*1e-3, 6*1e-3]; % [Radius [mm], + Delta Lenght [mm]]    
     %%---------------------------------------------------------------------
     [centers,radii] = aci_packing(R, rmax, rmin, delta, epsilon, N_fasc); % A-priori Check for Intersections (no overlapped fascicles)
     circular_fascicles = [centers, radii];
