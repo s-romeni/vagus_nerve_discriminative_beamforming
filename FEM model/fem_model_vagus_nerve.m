@@ -14,7 +14,7 @@ import com.comsol.model.*
 import com.comsol.model.util.*
 %%-------------------------------------------------------------------------
 N_sec = 1; % Define the number of section of the model to be generate
-nerve_diam = 2; % human
+nerve_diam = 2; % [mm]
 for i_sec = 1:N_sec % current number of nerve model 
     %%---------------------------------------------------------------------
     % Set TIME (electrode) parameters
@@ -24,7 +24,7 @@ for i_sec = 1:N_sec % current number of nerve model
     % Active site diameter [mm], Active site height [mm], ...
     % Inter channels distance [mm]];
     elec_params = [nerve_diam-(0.20+0.05), 0.5, 0.1, 0.20, 0.3, 7, 0.05, 0.03];
-    elec_params([1 2 3 4 5 7 8]) = elec_params([1 2 3 4 5 7 8]).*1e-3; % m2mm conversion
+    elec_params([1 2 3 4 5 7 8]) = elec_params([1 2 3 4 5 7 8]).*1e-3; % mm2m conversion
     l_shaft = elec_params(1);
     w_shaft = elec_params(2);
     h_shaft = elec_params(3);
@@ -41,7 +41,7 @@ for i_sec = 1:N_sec % current number of nerve model
     %     'Fascicle maximum radius [mm]', 'Nerve external radius [mm]', ...
     %     'delta [mm]', 'epsilon [mm]', 'Nerve extrusion length [mm]'};
     nerve_pars = [6, 0.08, 0.35, nerve_diam/2, 0.05, 0.01, 20];
-    nerve_pars(2:end) = nerve_pars(2:end)*1e-3; % m2mm conversion
+    nerve_pars(2:end) = nerve_pars(2:end)*1e-3; % mm2m conversion
     N_fasc  = nerve_pars(1);
     rmin    = nerve_pars(2);
     rmax    = nerve_pars(3);
@@ -50,7 +50,7 @@ for i_sec = 1:N_sec % current number of nerve model
     epsilon = nerve_pars(6);
     %%---------------------------------------------------------------------
     % Set saline parameters
-    sal_pars = [2*1e-3, 30*1e-3]; % [Radius [mm], Extrusion Lenght [mm]]    
+    sal_pars = [2*1e-3, 20*1e-3]; % [Radius [mm], Extrusion Lenght [mm]]    
     %%---------------------------------------------------------------------
     [centers,radii] = aci_packing(R, rmax, rmin, delta, epsilon, N_fasc); % A-priori Check for Intersections (no overlapped fascicles)
     circular_fascicles = [centers, radii];
@@ -182,7 +182,7 @@ for i_sec = 1:N_sec % current number of nerve model
     %%---------------------------------------------------------------------
     
     %%---------------------------------------------------------------------
-    % Set TIME (electrode) parameters
+    % Set CUFF electrode parameters
     %%---------------------------------------------------------------------
     % elec_params = [Internal length [mm], Internal y-length [mm], Thickness [mm], ...
     % Extrusion length [mm], Num of channels x side [1], ... 
@@ -191,7 +191,7 @@ for i_sec = 1:N_sec % current number of nerve model
   
     %%---------------------------------------------------------------------
     elec_params = [nerve_diam, 0.5, 0.1, 10, 7, 0.05, 0.03];
-    elec_params([1 2 3 4 6 7]) = elec_params([1 2 3 4 6 7]).*1e-3;
+    elec_params([1 2 3 4 6 7]) = elec_params([1 2 3 4 6 7]).*1e-3; % mm2m
     a    = elec_params(1);
     b    = elec_params(2);
     t    = elec_params(3);
