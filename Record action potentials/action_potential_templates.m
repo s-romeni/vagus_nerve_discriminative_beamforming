@@ -113,21 +113,20 @@ for e = 1:2
         end
         N_channels = length(dataref);
         %%-----------------------------------------------------------------
-        % Impose resp fascicle at least the 3rd biggest and the bp fascicle
-        % smaller then the latter
+        % Nerve topography
         %%-----------------------------------------------------------------
         if strcmp(type,'TIME')
             [~,I] = sort(circular_fascicles(:,3));
             candidate_motor = I(1:end-1);
-            motorfasc = candidate_motor(randi([1 length(candidate_motor)],1));
+            motor_fasc = candidate_motor(randi([1 length(candidate_motor)],1));
             defferent = zeros(fasc_number,1);
             for i_fib = 1:fasc_number
-                defferent(i_fib) = norm(circular_fascicles_CUFF(motorfasc,[1 2]) - circular_fascicles_CUFF(i_fib,[1 2]));
+                defferent(i_fib) = norm(circular_fascicles_CUFF(motor_fasc,[1 2]) - circular_fascicles_CUFF(i_fib,[1 2]));
             end
             [~,I] = sort(defferent);
-            motorfasc = I(1:floor(0.5*fasc_number));
+            motor_fasc = I(1:floor(0.5*fasc_number));
         else
-            load(['nerve_mod_vagus_human_' num2str(i_sec) '_TIME_rec.mat'],'motorfasc')
+            load(['nerve_mod_vagus_human_' num2str(i_sec) '_TIME_rec.mat'],'motor_fasc')
         end
         %%-----------------------------------------------------------------
         % Assign fiber location and size
@@ -144,7 +143,7 @@ for e = 1:2
         for i_fasc = 1:N_fasc
             sel = (x-circular_fascicles(i_fasc, 1)).^2 + (y-circular_fascicles(i_fasc, 2)).^2 < circular_fascicles(i_fasc, 3)^2;
             [row,col] = find(sel);
-            if sum(fasc_index == motorfasc) > 0
+            if sum(fasc_index == motor_fasc) > 0
                 for i_fib = 1:round(GainEff*circular_fascicles(fasc_index, 3)*circular_fascicles(fasc_index, 3)) % number of fibers
                     % Num of fibers = GainEff*[0.15, 0.7]*1e-3).^2
                     % Area fascicle = (([0.15, 0.7]*1e-3).^2)*pi
@@ -216,7 +215,7 @@ for e = 1:2
             clear fibers
         end
         nerve.fascicles = fascicles;
-        save(['nerve_mod_vagus_human_' num2str(i_sec) '_' type '_rec.mat'],'nerve','motorfasc')
+        save(['nerve_mod_vagus_human_' num2str(i_sec) '_' type '_rec.mat'],'nerve','motor_fasc')
     end
 end
 toc
