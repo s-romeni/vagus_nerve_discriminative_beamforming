@@ -133,7 +133,6 @@ for e = 1:2
         %%-----------------------------------------------------------------
         N_fasc = size(circular_fascicles,1);
         voxels = 2000; % 1 micron resolution on human vagus
-        nvox = round(voxels^2);
         xg = linspace(-R, R, voxels);
         yg = linspace(-R, R, voxels);
         z = 0;
