@@ -50,7 +50,7 @@ GainEff = 0.25*meanefffiber/(mean(a));
 step = 0;
 for d = 6:12
     step = step+1;
-    load(['Abeta_fiber_' num2str(d, '%1.0d') '.mat'])
+    load(['Abeta_fiber_' num2str(d, '%1.0d') '.mat'],'data')
     [~,start] = max(data(31,:));
     [~,stop] = max(data(end-30,:));
     data = -1e-3*1e-8*area*data(31:end-30,start-1e2:stop+1e2); % from mA/cm^2 to A
@@ -68,7 +68,7 @@ end
 step = 0;
 for d = 10:13
     step = step+1;
-    load(['Aalpha_fiber_' num2str(d, '%1.0d') '.mat'])
+    load(['Aalpha_fiber_' num2str(d, '%1.0d') '.mat'],'data')
     [~,start] = max(data(21,:));
     [~,stop] = max(data(end-20,:));
     data = -1e-3*1e-8*area*data(21:end-20,start-1e2:stop+1e2); % from mA/cm^2 to A
@@ -104,14 +104,14 @@ for e = 1:2
     %%---------------------------------------------------------------------
     tic
     for i_sec = 1:N_sec % current number of nerve model
-        load(['nerve_mod_vagus_human_' num2str(i_sec) '.mat'])
-        load(['results_' type '_human_vagus_' num2str(i_sec) '.mat'])
+        load(['nerve_mod_vagus_human_' num2str(i_sec) '.mat'],'circular_fascicles','circular_fascicles_TIME','R')
+        load(['results_' type '_human_vagus_' num2str(i_sec) '.mat'],'dataref')
         %%-----------------------------------------------------------------
         circular_fascicles_CUFF = circular_fascicles;
         if strcmp(type,'TIME')
             circular_fascicles = circular_fascicles_TIME;
         end
-        channels = length(dataref);
+        N_channels = length(dataref);
         %%-----------------------------------------------------------------
         % Impose resp fascicle at least the 3rd biggest and the bp fascicle
         % smaller then the latter
@@ -158,12 +158,12 @@ for e = 1:2
                         nrand = randi(length(row));
                         fibers(i_fib).location(1:2) = pos;
                         fibers(i_fib).location(3) = diameter;
-                        Re = zeros(channels,length(fiberAa(diam).x));
-                        for channel = 1:channels
+                        Re = zeros(N_channels,length(fiberAa(diam).x));
+                        for i_channel = 1:N_channels
                             %%---------------------------------------------
                             % FEM Analysis
                             %%---------------------------------------------
-                            F = scatteredInterpolant(dataref{channel}.p',dataref{channel}.d1');
+                            F = scatteredInterpolant(dataref{i_channel}.p',dataref{i_channel}.d1');
                             [~, ~, zg] = meshgrid(fibers(i_fib).location(1), fibers(i_fib).location(2), fiberAa(diam).x);
                             zq = zg(:);
                             r = zeros(1,length(fiberAa(diam).x));
@@ -172,7 +172,7 @@ for e = 1:2
                                 Res = vq/vol_as;
                                 r(1,node) = Res;
                             end
-                            Re(channel,:) = r;
+                            Re(i_channel,:) = r;
                         end
                         % Re = fliplr(Re); % efferent (since is symmetric
                         % there is no need)
@@ -191,12 +191,12 @@ for e = 1:2
                         nrand = randi(length(row));
                         fibers(i_fib).location(1:2) = pos;
                         fibers(i_fib).location(3) = diameter;
-                        Re = zeros(channels,length(fiberAb(diam).x));
-                        for channel = 1:channels
+                        Re = zeros(N_channels,length(fiberAb(diam).x));
+                        for i_channel = 1:N_channels
                             %%---------------------------------------------
                             % FEM Analysis
                             %%---------------------------------------------
-                            F = scatteredInterpolant(dataref{channel}.p',dataref{channel}.d1');
+                            F = scatteredInterpolant(dataref{i_channel}.p',dataref{i_channel}.d1');
                             [~, ~, zg] = meshgrid(fibers(i_fib).location(1), fibers(i_fib).location(2), fiberAb(diam).x);
                             zq = zg(:);
                             r = zeros(1,length(fiberAb(diam).x));
@@ -205,7 +205,7 @@ for e = 1:2
                                 Res = vq/vol_as;
                                 r(1,node) = Res;
                             end
-                            Re(channel,:) = r;
+                            Re(i_channel,:) = r;
                         end
                         % Re = Re; % afferent
                         fibers(i_fib).data = Re*fiberAb(diam).data;
