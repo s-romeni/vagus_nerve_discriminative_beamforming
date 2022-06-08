@@ -3,7 +3,9 @@ clear
 %%-------------------------------------------------------------------------
 % General info: Compute the Lead Field Matrix from the FEM model
 %%-------------------------------------------------------------------------
-% Authors: Andrea Pitzus @TNE, SSSA // @MeDSP, UniCa & Simone Romeni @TNE, EPFL
+% Authors: 
+%%-------------------------------------------------------------------------
+% Andrea Pitzus @TNE, SSSA // @MeDSP, UniCa & Simone Romeni @TNE, EPFL
 %%-------------------------------------------------------------------------
 for e = 1:2
     switch e
