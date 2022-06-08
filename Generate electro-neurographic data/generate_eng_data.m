@@ -31,8 +31,9 @@ for e = 1:2
     %%---------------------------------------------------------------------
     % Challenges:
     % For each afferent fascicle (at time) signal is imposed to be a spike
-    % train modeled as an inhomogeneous Poisson process, modulated by
-    % physiological parameters (BP and RESP)
+    % train modeled as an inhomogeneous Poisson process, with an imposed 
+    % firing rate between 2.5 and 25 Hz, modulated by physiological  
+    % parameters (BP and RESP)
     % Others fascicles activity is modeled as a homogeneous Poisson process
     % with an imposed firing rate between 2.5 and 25 Hz
     %%---------------------------------------------------------------------
