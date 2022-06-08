@@ -10,7 +10,9 @@ clear
 % organization and bioelectronic modulation of the vagus nerve,”
 % Neuroscience, preprint, Mar. 2022. doi: 10.1101/2022.03.07.483266.
 %%-------------------------------------------------------------------------
-% Authors: Andrea Pitzus @TNE, SSSA // @MeDSP, UniCa & Simone Romeni @TNE, EPFL
+% Authors: 
+%%-------------------------------------------------------------------------
+% Andrea Pitzus @TNE, SSSA // @MeDSP, UniCa & Simone Romeni @TNE, EPFL
 %%-------------------------------------------------------------------------
 % Analysis are done with a dt = 0.025 ms equally to fs = 40 kHz
 %%-------------------------------------------------------------------------
