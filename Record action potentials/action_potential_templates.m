@@ -48,7 +48,7 @@ GainEff = 0.25*meanefffiber/(mean(a));
 step = 0;
 for d = 6:12
     step = step+1;
-    load(['fiberAb_' num2str(d, '%1.0d') '.mat'])
+    load(['Abeta_fiber_' num2str(d, '%1.0d') '.mat'])
     [~,start] = max(data(31,:));
     [~,stop] = max(data(end-30,:));
     data = -1e-3*1e-8*area*data(31:end-30,start-1e2:stop+1e2); % from mA/cm^2 to A
@@ -66,7 +66,7 @@ end
 step = 0;
 for d = 10:13
     step = step+1;
-    load(['fiberAa_' num2str(d, '%1.0d') '.mat'])
+    load(['Aalpha_fiber_' num2str(d, '%1.0d') '.mat'])
     [~,start] = max(data(21,:));
     [~,stop] = max(data(end-20,:));
     data = -1e-3*1e-8*area*data(21:end-20,start-1e2:stop+1e2); % from mA/cm^2 to A
