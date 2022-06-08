@@ -10,6 +10,10 @@ close all
 % Subdiaphragmatic Vagus Nerves of Human, Pig, and Rat,” Front. Neurosci., 
 % vol. 14, p. 601479, Nov. 2020, doi: 10.3389/fnins.2020.601479.
 %%-------------------------------------------------------------------------
+% Authors:
+%%-------------------------------------------------------------------------
+% Andrea Pitzus @TNE, SSSA // @MeDSP, UniCa & Simone Romeni @TNE, EPFL
+%%-------------------------------------------------------------------------
 import com.comsol.model.*
 import com.comsol.model.util.*
 %%-------------------------------------------------------------------------
