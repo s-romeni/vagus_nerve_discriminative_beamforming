@@ -7,6 +7,7 @@
 # “A model of motor and sensory axon activation in the median nerve using 
 # surface electrical stimulation,” J Comput Neurosci, vol. 45, no. 1, pp. 
 # 29–43, Aug. 2018, doi: 10.1007/s10827-018-0689-5.
+# Repository: https://senselab.med.yale.edu/ModelDB/ShowModel?model=243841#tabs-1
 ##-----------------------------------------------------------------------------
 # Import the neuron module into Python
 ##-----------------------------------------------------------------------------
