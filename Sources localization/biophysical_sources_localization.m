@@ -3,6 +3,17 @@ clear
 %%-------------------------------------------------------------------------
 % General info: Perform a multiple biophysical sources localization
 %%-------------------------------------------------------------------------
+% Along the scripts several methods have been implemented/developed based 
+% on the following bibliographic sources:
+% B. Wodlinger and D. M. Durand, “Localization and Recovery of Peripheral 
+% Neural Sources With Beamforming Algorithms,” IEEE Transactions on Neural 
+% Systems and Rehabilitation Engineering, vol. 17, no. 5, pp. 461–468, 
+% Oct. 2009, doi: 10.1109/TNSRE.2009.2034072.
+% F. Babiloni et al., “Multimodal integration of high-resolution EEG and
+% functional magnetic resonance imaging data: a simulation study,” 
+% NeuroImage, vol. 19, no. 1, pp. 1–15, May 2003, 
+% doi: 10.1016/S1053-8119(03)00052-1.
+%%-------------------------------------------------------------------------
 % Authors: 
 %%-------------------------------------------------------------------------
 % Andrea Pitzus @TNE, SSSA // @MeDSP, UniCa & Simone Romeni @TNE, EPFL
@@ -98,15 +109,6 @@ for e = 1:2
     xq = x(:);
     yq = y(:);
     zq = z(:);
-    %%---------------------------------------------------------------------
-    % Challenges:
-    % Is performed a challenge for each fascicles
-    % For each challenge the ith fascicle signal is imposed to be a spike
-    % train modeled as an inhomogeneous Poisson process, modulated by
-    % physiological parameters (BP and RESP)
-    % Others fascicles activity is modeled as a homogeneous Poisson process
-    % with an imposed firing rate between 2.5 and 25 Hz
-    % Last, noise level is adjusted
     %%---------------------------------------------------------------------
     load('syn_bp.mat')    
     load('syn_resp.mat')
