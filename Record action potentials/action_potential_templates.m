@@ -102,7 +102,6 @@ for e = 1:2
     r_as = 0.5*0.5*1e-3;
     vol_as = (h_as)*pi*(r_as)^2;
     %%---------------------------------------------------------------------
-    tic
     for i_sec = 1:N_sec % current number of nerve model
         load(['nerve_mod_vagus_human_' num2str(i_sec) '.mat'],'circular_fascicles','circular_fascicles_TIME','R')
         load(['results_' type '_human_vagus_' num2str(i_sec) '.mat'],'dataref')
@@ -217,4 +216,3 @@ for e = 1:2
         save(['nerve_mod_vagus_human_' num2str(i_sec) '_' type '_rec.mat'],'nerve','motor_fasc')
     end
 end
-toc
