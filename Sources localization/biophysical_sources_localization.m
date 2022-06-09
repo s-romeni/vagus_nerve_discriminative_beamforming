@@ -20,9 +20,6 @@ clear
 %%-------------------------------------------------------------------------
 % Analysis are done with a dt = 0.025 ms equally to fs = 40 kHz
 %%-------------------------------------------------------------------------
-N_sec = 1; % Define the number of section of the model to be generate
-Model = 'Structural'; % 'Generic' otherwise
-%%-------------------------------------------------------------------------
 % Challenges:
 % For each afferent fascicle (at time) signal is imposed to be a spike
 % train modeled as an inhomogeneous Poisson process, with an imposed 
@@ -30,6 +27,9 @@ Model = 'Structural'; % 'Generic' otherwise
 % parameters (BP and RESP)
 % Others fascicles activity is modeled as a homogeneous Poisson process
 % with an imposed firing rate between 2.5 and 25 Hz
+%%-------------------------------------------------------------------------
+N_sec = 1; % Define the number of section of the model to be generate
+Model = 'Structural'; % 'Generic' otherwise
 %%-------------------------------------------------------------------------
 Data1 = 'Error BP';
 Data2 = 'Error RESP';
