@@ -52,9 +52,6 @@ for e = 1:2
     y = linspace(-R, R, voxels);
     z = 0;
     [x, y, z] = meshgrid(x, y, z);
-    xq = x(:);
-    yq = y(:);
-    zq = z(:);
     sel = x.^2 + y.^2 < R^2;
     if strcmp('TIME',type)
         tl = 0.2;
