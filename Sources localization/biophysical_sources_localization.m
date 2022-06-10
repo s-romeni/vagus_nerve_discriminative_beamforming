@@ -99,8 +99,6 @@ for e = 1:2
     %%---------------------------------------------------------------------
     for i_sec = 1:N_sec % current number of nerve model
         %%-----------------------------------------------------------------
-        load(['LFM_' type '_human_vagus_' num2str(i_sec) '.mat'],'LFM')
-        %%-----------------------------------------------------------------
         load(['nerve_mod_vagus_human_' num2str(i_sec) '.mat'],'circular_fascicles')
         N_fasc = size(circular_fascicles,1);
         if strcmp(model,'Structural')
