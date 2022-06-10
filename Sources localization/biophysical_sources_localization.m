@@ -49,7 +49,7 @@ for e = 1:2
     %%---------------------------------------------------------------------
     % Integrate structural information
     %%---------------------------------------------------------------------
-    load('nerve_mod_vagus_human_generic.mat')
+    load('nerve_mod_vagus_human_generic.mat','R')
     voxels = 40; % 50 micron res
     x = linspace(-R, R, voxels);
     y = linspace(-R, R, voxels);
@@ -72,40 +72,11 @@ for e = 1:2
         sel = sel - (x > (-1e-3*nerve_diam/2+l_cc/2) & x < (-1e-3*nerve_diam/2+l_cc/2+l_shaft) & y > (-h_shaft/2-h_as_t) & y < (-h_shaft/2-h_as_t+h_shaft));
     end
     %%---------------------------------------------------------------------
-    if strcmp(model,'Structural')
-       for i_fasc = 1:N_fasc
-            sell = (x-circular_fascicles(i_fasc, 1)).^2 + (y-circular_fascicles(i_fasc, 2)).^2 <(circular_fascicles(i_fasc, 3)).^2;
-            sel = sel+sell;
-        end 
-    end
-    sel = reshape(sel,[1 N_vox]);
-    Winv = diag(sel(:));
-    load(['LFM_' type '_human_vagus_generic.mat'])
-    hat_LFM = (Winv*LFM')';
-    %%---------------------------------------------------------------------
-    % Compute the pseudoinverse of the lead field matrix
-    %%---------------------------------------------------------------------
-    LFM_psd_inv = (LFM*Winv*LFM')^-1;
-    LFM_psd_inv = LFM_psd_inv*LFM*Winv;
-    LFM_psd_inv = LFM_psd_inv';
-    %%-----------------------------------------------------------------
-    for i_fasc = 1:size(LFM_psd_inv,1)
-        if norm(Winv*LFM'*LFM_psd_inv(i_fasc,:)') > 0
-            LFM_psd_inv(i_fasc,:) = LFM_psd_inv(i_fasc,:)/norm(Winv*LFM'*LFM_psd_inv(i_fasc,:)');
-        end
-    end
-    %%---------------------------------------------------------------------
     
     %%---------------------------------------------------------------------
     N_ch = size(LFM_psd_inv,2);
     N_vox = size(LFM_psd_inv,1);
     %%---------------------------------------------------------------------
-    load('nerve_mod_vagus_human_generic.mat')
-    voxels = 40; % 50 micron res
-    x = linspace(-R, R, voxels);
-    y = linspace(-R, R, voxels);
-    z = 0;
-    [x, y, z] = meshgrid(x, y, z);
     xq = x(:);
     yq = y(:);
     zq = z(:);
@@ -127,11 +98,38 @@ for e = 1:2
     resp = resp(tau+1:end);  
     %%---------------------------------------------------------------------
     for i_sec = 1:N_sec % current number of nerve model
-        %%---------------------------------------------------------------------
+        %%-----------------------------------------------------------------
         load(['LFM_' type '_human_vagus_' num2str(i_sec) '.mat'],'LFM')
         %%-----------------------------------------------------------------
         load(['nerve_mod_vagus_human_' num2str(i_sec) '.mat'],'circular_fascicles')
         N_fasc = size(circular_fascicles,1);
+        if strcmp(model,'Structural')
+            for i_fasc = 1:N_fasc
+                sell = (x-circular_fascicles(i_fasc, 1)).^2 + (y-circular_fascicles(i_fasc, 2)).^2 <(circular_fascicles(i_fasc, 3)).^2;
+                sel = sel+sell;
+            end 
+        end
+        N_vox = voxels^2;
+        sel = reshape(sel,[1 N_vox]);
+        Winv = diag(sel(:));
+        if strcmp(model,'Structural')
+            load(['LFM_' type '_human_vagus_' num2str(i_sec) '.mat'],'LFM')
+        else
+            load(['LFM_' type '_human_vagus_generic.mat'],'LFM')
+        end
+        hat_LFM = (Winv*LFM')';
+        %%---------------------------------------------------------------------
+        % Compute the pseudoinverse of the lead field matrix
+        %%---------------------------------------------------------------------
+        LFM_psd_inv = (LFM*Winv*LFM')^-1;
+        LFM_psd_inv = LFM_psd_inv*LFM*Winv;
+        LFM_psd_inv = LFM_psd_inv';
+        %%-----------------------------------------------------------------
+        for i_fasc = 1:size(LFM_psd_inv,1)
+            if norm(Winv*LFM'*LFM_psd_inv(i_fasc,:)') > 0
+                LFM_psd_inv(i_fasc,:) = LFM_psd_inv(i_fasc,:)/norm(Winv*LFM'*LFM_psd_inv(i_fasc,:)');
+            end
+        end
         %%-----------------------------------------------------------------
         load(['nerve_mod_vagus_human_' num2str(i_sec) '_' type '_rec'],'motor_fasc')
         %%-----------------------------------------------------------------
