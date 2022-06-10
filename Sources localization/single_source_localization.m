@@ -46,7 +46,7 @@ for e = 1:2
     y = linspace(-R, R, voxels);
     z = 0;
     [x, y, z] = meshgrid(x, y, z);
-    sel = x.^2 + y.^2 < R^2;
+    sel_gen = x.^2 + y.^2 < R^2;
     if strcmp('TIME',type)
         tl = 0.2;
         nerve_diam = 2*R*1e3; % human
@@ -58,7 +58,7 @@ for e = 1:2
         % vol_as = (h_as)*pi*(r_as)^2;
         Nasxs = 7;
         l_cc = l_shaft/Nasxs;
-        sel = sel - (x > (-1e-3*nerve_diam/2+l_cc/2) & x < (-1e-3*nerve_diam/2+l_cc/2+l_shaft) & y > (-h_shaft/2-h_as_t) & y < (-h_shaft/2-h_as_t+h_shaft));
+        sel_gen = sel_gen - (x > (-1e-3*nerve_diam/2+l_cc/2) & x < (-1e-3*nerve_diam/2+l_cc/2+l_shaft) & y > (-h_shaft/2-h_as_t) & y < (-h_shaft/2-h_as_t+h_shaft));
     end
     %---------------------------------------------------------------------
     
@@ -72,6 +72,7 @@ for e = 1:2
         if strcmp(type,'TIME')
             circular_fascicles = circular_fascicles_TIME;
         end
+        sel = sel_gen;
         if strcmp(model,'Structural')
             for i_fasc = 1:N_fasc
                 sell = (x-circular_fascicles(i_fasc, 1)).^2 + (y-circular_fascicles(i_fasc, 2)).^2 <(circular_fascicles(i_fasc, 3)).^2;
@@ -125,25 +126,25 @@ for e = 1:2
             for i_fasc = 1:N_fasc
                 %%---------------------------------------------------------
                 % All the fascicle
-                sel = (x-circular_fascicles(i_fasc, 1)).^2 + (y-circular_fascicles(i_fasc, 2)).^2 < circular_fascicles(i_fasc, 3)^2;
-                sel = reshape(sel,[1 N_vox]);
-                sel = find(sel == 1);
+                pixs = (x-circular_fascicles(i_fasc, 1)).^2 + (y-circular_fascicles(i_fasc, 2)).^2 < circular_fascicles(i_fasc, 3)^2;
+                pixs = reshape(pixs,[1 N_vox]);
+                pixs = find(pixs == 1);
                 %%---------------------------------------------------------
                 rng(s+i_fasc,'twister');
                 cn = dsp.ColoredNoise('brown','SamplesPerFrame',length(sig),'NumChannels',length(sel)); % Flicker noise
                 rng(s+i_fasc,'twister');
-                rest_sig(sel,:) = cn()';
+                rest_sig(pixs,:) = cn()';
                 %%---------------------------------------------------------
                 % Only the central pixel
                 dist = (x-circular_fascicles(i_fasc, 1)).^2 + (y-circular_fascicles(i_fasc, 2)).^2;
                 dist = reshape(dist,[1 N_vox]);
                 [h,I] = sort(dist,'ascend');
-                sel = I(1);
+                pix = I(1);
                 %%---------------------------------------------------------
-                rest_sig(sel,:) = zeros(length(sel),1)*sig;
+                rest_sig(pix,:) = zeros(length(pix),1)*sig;
                 rec_rest = LFM*(rest_sig);
                 S = zeros(size(rest_sig));
-                S(sel,:) = ones(length(sel),1)*sig;
+                S(pix,:) = ones(length(pix),1)*sig;
                 rec_sig = LFM*S;
                 rec_sources{i_fasc} = rec_sig;
                 rec_noise{i_fasc} = rec_rest;
