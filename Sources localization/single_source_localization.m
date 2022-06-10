@@ -28,7 +28,7 @@ clear
 N_sec = 1; % Define the number of section of the model to be generate
 Model = 'Structural'; % 'Generic' otherwise
 %%-------------------------------------------------------------------------
-seeds = [1 1];
+
 %%-------------------------------------------------------------------------
 for e = 1:2
     switch e
