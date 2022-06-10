@@ -96,6 +96,9 @@ for e = 1:2
         %%-----------------------------------------------------------------
         load(['nerve_mod_vagus_human_' num2str(i_sec) '.mat'],'circular_fascicles')
         N_fasc = size(circular_fascicles,1);
+        if strcmp(type,'TIME')
+            circular_fascicles = circular_fascicles_TIME;
+        end
         if strcmp(model,'Structural')
             for i_fasc = 1:N_fasc
                 sell = (x-circular_fascicles(i_fasc, 1)).^2 + (y-circular_fascicles(i_fasc, 2)).^2 <(circular_fascicles(i_fasc, 3)).^2;
