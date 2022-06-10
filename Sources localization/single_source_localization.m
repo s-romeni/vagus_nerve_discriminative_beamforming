@@ -90,9 +90,9 @@ for e = 1:2
             load(['LFM_' type '_human_vagus_generic.mat'],'LFM')
         end
         hat_LFM = (Winv*LFM')';
-        %%---------------------------------------------------------------------
+        %%-----------------------------------------------------------------
         % Compute the pseudoinverse of the lead field matrix
-        %%---------------------------------------------------------------------
+        %%-----------------------------------------------------------------
         LFM_psd_inv = (LFM*Winv*LFM')^-1;
         LFM_psd_inv = LFM_psd_inv*LFM*Winv;
         LFM_psd_inv = LFM_psd_inv';
@@ -218,7 +218,7 @@ for e = 1:2
                 error(i_challenge) = 1e3*norm([x(cen) y(cen)]-[x(order(1,1)) y(order(1,1))]); % mm
             end
             %%-------------------------------------------------------------
-            save([cd '\Generic\SNR = ' num2str(snr) '\error_BF_' type '_' num2str(i_sec) '.mat'],'error')
+            save(['SNR = ' num2str(snr) '\error_BF_' type '_' num2str(i_sec) '.mat'],'error')
             %%-------------------------------------------------------------
             
             %%-------------------------------------------------------------
