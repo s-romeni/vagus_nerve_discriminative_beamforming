@@ -122,20 +122,20 @@ for e = 1:2
             SNR = zeros(N_fasc,N_ch);
             rec_sources = cell(N_fasc,1);
             rec_noise = cell(N_fasc,1);
-            for i_ch = 1:N_fasc
+            for i_fasc = 1:N_fasc
                 %%---------------------------------------------------------
                 % All the fascicle
-                sel = (x-circular_fascicles(i_ch, 1)).^2 + (y-circular_fascicles(i_ch, 2)).^2 < circular_fascicles(i_ch, 3)^2;
+                sel = (x-circular_fascicles(i_fasc, 1)).^2 + (y-circular_fascicles(i_fasc, 2)).^2 < circular_fascicles(i_fasc, 3)^2;
                 sel = reshape(sel,[1 N_vox]);
                 sel = find(sel == 1);
                 %%---------------------------------------------------------
-                rng(s+i_ch,'twister');
+                rng(s+i_fasc,'twister');
                 cn = dsp.ColoredNoise('brown','SamplesPerFrame',length(sig),'NumChannels',length(sel)); % Flicker noise
-                rng(s+i_ch,'twister');
+                rng(s+i_fasc,'twister');
                 rest_sig(sel,:) = cn()';
                 %%---------------------------------------------------------
                 % Only the central pixel
-                dist = (x-circular_fascicles(i_ch, 1)).^2 + (y-circular_fascicles(i_ch, 2)).^2;
+                dist = (x-circular_fascicles(i_fasc, 1)).^2 + (y-circular_fascicles(i_fasc, 2)).^2;
                 dist = reshape(dist,[1 N_vox]);
                 [h,I] = sort(dist,'ascend');
                 sel = I(1);
@@ -145,12 +145,12 @@ for e = 1:2
                 S = zeros(size(rest_sig));
                 S(sel,:) = ones(length(sel),1)*sig;
                 rec_sig = LFM*S;
-                rec_sources{i_ch} = rec_sig;
-                rec_noise{i_ch} = rec_rest;
+                rec_sources{i_fasc} = rec_sig;
+                rec_noise{i_fasc} = rec_rest;
                 %%---------------------------------------------------------
                 % Signal-to-Noise Ratio
                 %%---------------------------------------------------------
-                SNR(i_ch,:) = rms(rec_sig')./rms(rec_rest');
+                SNR(i_fasc,:) = rms(rec_sig')./rms(rec_rest');
                 %%---------------------------------------------------------
             end
             %%-------------------------------------------------------------
@@ -197,8 +197,8 @@ for e = 1:2
             % Beamfoarming
             %%-------------------------------------------------------------
             BF = zeros(N_challenges,N_vox);
-            for i_ch = 1:N_challenges % challenge
-                BF(i_ch,:) = rms(estimated_sources{i_ch},2);
+            for i_challenge = 1:N_challenges % challenge
+                BF(i_challenge,:) = rms(estimated_sources{i_challenge},2);
             end
             %%-------------------------------------------------------------
             error = zeros(N_challenges,1);
@@ -254,7 +254,7 @@ for e = 1:2
             % Discriminative Beamforming
             %%-------------------------------------------------------------
             DBF = zeros(N_challenges,N_vox);
-            for i_ch = 1:N_challenges % challenge
+            for i_challenge = 1:N_challenges % challenge
                 DBF(i_challenge,:) = LFM_psd_inv*D(i_challenge,:)';
             end
             %%-------------------------------------------------------------
