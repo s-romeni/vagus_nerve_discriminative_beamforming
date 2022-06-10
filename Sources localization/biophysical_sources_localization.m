@@ -46,9 +46,6 @@ for e = 1:2
         case 2
             type = 'CUFF';
     end
-    %%---------------------------------------------------------------------
-    % Integrate structural information
-    %%---------------------------------------------------------------------
     load('nerve_mod_vagus_human_generic.mat','R')
     voxels = 40; % 50 micron res
     x = linspace(-R, R, voxels);
@@ -94,6 +91,8 @@ for e = 1:2
     resp = resp(tau+1:end);  
     %%---------------------------------------------------------------------
     for i_sec = 1:N_sec % current number of nerve model
+        %%-----------------------------------------------------------------
+        % Integrate structural information
         %%-----------------------------------------------------------------
         load(['nerve_mod_vagus_human_' num2str(i_sec) '.mat'],'circular_fascicles')
         N_fasc = size(circular_fascicles,1);
