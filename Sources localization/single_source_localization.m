@@ -206,7 +206,9 @@ for e = 1:2
             %%-------------------------------------------------------------
             error = zeros(N_challenges,1);
             for i_challenge = 1:N_challenges
+                %%---------------------------------------------------------
                 M = BF(i_challenge,:);
+                %%---------------------------------------------------------
                 [~,I] = sort(M,'descend');
                 order = I;
                 dist = (x-circular_fascicles(i_challenge, 1)).^2 + (y-circular_fascicles(i_challenge, 2)).^2;
@@ -261,7 +263,9 @@ for e = 1:2
             %%-------------------------------------------------------------
             error = zeros(N_challenges,1);
             for i_challenge = 1:N_challenges
+                %%---------------------------------------------------------
                 M = DBF(i_challenge,:);
+                %%---------------------------------------------------------
                 [~,I] = sort(M,'descend');
                 order = I;
                 dist = (x-circular_fascicles(i_challenge, 1)).^2 + (y-circular_fascicles(i_challenge, 2)).^2;
