@@ -1,4 +1,4 @@
-# Establish vagus nerve functional topography via different source localization methods
+# Establish vagus nerve functional topography using different source localization methods
 This is the repository for the manuscript *A method to establish functional vagus nerve topography from electro-neurographic spontaneous activity*, under review at [Cell: Patterns](https://www.cell.com/patterns/home). The manuscript pre-print is available [here].
 
 **Authors:** Andrea Pitzus*, Simone Romeni*, Fabio Vallone, Silvestro Micera.
