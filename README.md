@@ -3,7 +3,7 @@ This is the repository for the manuscript *A method to establish functional vagu
 
 **Authors:** Andrea Pitzus*, Simone Romeni*, Fabio Vallone, Silvestro Micera.
 **equally contribute*
-## A short guide to the repository
+## A short guide to the repositories
 
 ![Workflow](readme.png)
 
