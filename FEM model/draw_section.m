@@ -1,4 +1,4 @@
-function circular_fascicles = draw_section(R,circular_fascicles_TIME,circular_fascicles,l_shaft,pos,d_as,h_as)
+function draw_section(R,circular_fascicles_TIME,circular_fascicles,l_shaft,pos,d_as,h_as)
 %%-------------------------------------------------------------------------
 % Function description:
 %%-------------------------------------------------------------------------
