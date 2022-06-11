@@ -17,7 +17,6 @@ These repo contains the following scripts:
 ##### [:file_folder: Generate electro-neurographic data](https://github.com/s-romeni/vagus_nerve_discriminative_beamforming/tree/main/Generate%20electro-neurographic%20data) 
 * `generate_blood_pressure.m`,`generate_pulmonary_volume.m`, which generate the simulated average blood pressure and pulmonary volume in resting conditions;
 * `generate_eng_data.m`, which generate the simulated electro-neurographic signals recorded from the human left vagus nerve.
-:file_folder: 
 ##### [:file_folder: Sources localization](https://github.com/s-romeni/vagus_nerve_discriminative_beamforming/tree/main/Sources%20localization) 
 * `compute_lead_field_matrix.m`, which compute the lead field matrix from the human left vagus nerve model;
 * `single_source_localization.m`, which perform the single source localization case;
