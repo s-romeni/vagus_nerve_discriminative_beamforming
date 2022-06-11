@@ -8,7 +8,7 @@ This is the repository for the manuscript *A method to establish functional vagu
 ![Workflow](readme.png)
 
 ### Main scripts
-These repo contains the following scripts:
+These repo contain the following scripts:
 ##### [:file_folder: FEM model](https://github.com/s-romeni/vagus_nerve_discriminative_beamforming/tree/main/FEM%20model) 
 * `fem_model_vagus_nerve.m`, which generate a plausible human left vagus nerve model.
 ##### [:file_folder: Record action potentials](https://github.com/s-romeni/vagus_nerve_discriminative_beamforming/tree/main/Record%20action%20potentials) 
