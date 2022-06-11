@@ -9,15 +9,12 @@ This is the repository for the manuscript *A method to establish functional vagu
 
 ### Main scripts
 These repo contains the following scripts:
-:file_folder: 
-##### [FEM model](https://github.com/s-romeni/vagus_nerve_discriminative_beamforming/tree/main/FEM%20model) 
+##### [:file_folder: FEM model](https://github.com/s-romeni/vagus_nerve_discriminative_beamforming/tree/main/FEM%20model) 
 * `fem_model_vagus_nerve.m`, which generate a plausible human left vagus nerve model.
-:file_folder: 
-##### [Record action potentials](https://github.com/s-romeni/vagus_nerve_discriminative_beamforming/tree/main/Record%20action%20potentials) 
+##### [:file_folder: Record action potentials](https://github.com/s-romeni/vagus_nerve_discriminative_beamforming/tree/main/Record%20action%20potentials) 
 * `Aalpha_fibers_nodes_current.py`,`Abeta_fibers_nodes_current.py`, which generate the nodes currents of myelinated motor and sensory fibers;
 * `action_potential_templates.m`, which simulates the action potential recording of each fiber.
-:file_folder: 
-##### [Generate electro-neurographic data](https://github.com/s-romeni/vagus_nerve_discriminative_beamforming/tree/main/Generate%20electro-neurographic%20data) 
+##### [:file_folder: Generate electro-neurographic data](https://github.com/s-romeni/vagus_nerve_discriminative_beamforming/tree/main/Generate%20electro-neurographic%20data) 
 * `generate_blood_pressure.m`,`generate_pulmonary_volume.m`, which generate the simulated average blood pressure and pulmonary volume in resting conditions;
 * `generate_eng_data.m`, which generate the simulated electro-neurographic signals recorded from the human left vagus nerve.
 :file_folder: 
