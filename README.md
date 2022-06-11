@@ -40,4 +40,4 @@ This is the repository for the manuscript *A method to establish functional vagu
 
 
 
-All data needed to execute the scripts are generated within the script.
+All data needed to execute the code are generated within the scripts.
