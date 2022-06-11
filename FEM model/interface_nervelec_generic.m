@@ -2,7 +2,7 @@ function model = interface_nervelec_generic(model, theta, asnum, P, elec_params)
 %%-------------------------------------------------------------------------
 % Function description: 
 %%-------------------------------------------------------------------------
-% Interface electrode and nerve geometries
+% Interface electrode and nerve geometries in the generic model case.
 %%-------------------------------------------------------------------------
 % Inputs: 
 %%-------------------------------------------------------------------------
