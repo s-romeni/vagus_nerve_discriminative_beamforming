@@ -1,7 +1,29 @@
-% This function has been used to generate synthetic BP
-% It can be used also for ECG and RESP
-%%-------------------------------------------------------------------------
 function data = physiomodel(t,xyz,A,fresp,rr,dt,thetai,a,b)
+%%-------------------------------------------------------------------------
+% Function description: 
+%%-------------------------------------------------------------------------
+% This function generate synthetic BP (or eventually ECG and RESP) given the model parameters.
+%%-------------------------------------------------------------------------
+% Inputs: 
+%%-------------------------------------------------------------------------
+% • t: time.
+% • xyz: initial conditions.
+% • A: desired signal amplitude.
+% • fresp: respiratory frequency.
+% • rr: inter-beat interval process.
+% • dt: time resolution.
+% • thetai: waves phase parameters.
+% • a: waves amplitude parameters.
+% • b: waves width parameters.
+%%-------------------------------------------------------------------------
+% Outputs:
+%%-------------------------------------------------------------------------
+% • data: synthetic physiological data.
+%%-------------------------------------------------------------------------
+% Source: 
+%%-------------------------------------------------------------------------
+% Source: https://archive.physionet.org/physiotools/ecgsyn/Matlab/
+%%-------------------------------------------------------------------------
 theta = atan2(xyz(2),xyz(1));
 alpha = 1 - sqrt(xyz(1)^2+xyz(2)^2);
 i = t/dt;
